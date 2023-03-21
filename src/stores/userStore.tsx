@@ -7,7 +7,7 @@ export interface IUserDetails {
     phone: string;
     email: string;
     bank_details: string;
-    created_at: string;
+    createdAt: string;
 }
 
 export interface IUserStore {
@@ -24,7 +24,7 @@ const useUserStore = create<IUserStore>((set,get): IUserStore => ({
         phone: '',
         email: '',
         bank_details: '',
-        created_at: ''
+        createdAt: ''
     },
     setUserDetails: (userDetails: IUserDetails) => {
         console.log(userDetails);
