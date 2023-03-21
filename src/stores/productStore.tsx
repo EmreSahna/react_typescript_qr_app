@@ -17,6 +17,9 @@ export interface IProductStore {
     productDetails: IProductDetails[];
     setProductDetails: (productDetails: IProductDetails[]) => void;
     getProductDetails: () => IProductDetails[];
+    totalPrice: number;
+    setTotalPrice: (totalPrice: number) => void;
+    getTotalPrice: () => number;
 }
 
 const useProductStore = create<IProductStore>((set,get): IProductStore => ({
@@ -41,6 +44,16 @@ const useProductStore = create<IProductStore>((set,get): IProductStore => ({
     },
     getProductDetails: () => {
         return get().productDetails;
+    },
+    totalPrice: 0,
+    setTotalPrice: (totalPrice: number) => {
+        set((state) => ({
+            ...state,
+            totalPrice
+        }));
+    },
+    getTotalPrice: () => {
+        return get().totalPrice;
     }
 }));
 

@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react";
 import useUserStore from "../../stores/userStore";
 import BuyerDashboardService from "./service";
-import { AddBuyerBalanceState, BuyerTransactionsState } from "./types";
-import { useForm } from "react-hook-form";
+import { AddBuyerBalanceState, BuyerDetails, BuyerTransactionsState } from "./types";
 
 const BuyerDashboard = () => {
     const userStore = useUserStore((state) => state);
-    const userDetails = userStore.getUserDetails();
-    const [balance, setBalance] = useState(0);
-    const [balanceRequest, setBalanceRequest] = useState<AddBuyerBalanceState>({
-        amount: 0,
-        id: userDetails.id
-    });
 
+    const [wallet, setWallet] = useState(userStore.getUserWallet());
+    const [userId, setUserId] = useState(userStore.getUserDetails().id);
+    const [userDetails, setUserDetails] = useState<BuyerDetails>({
+        name: "",
+        email: "",
+        phone: "",
+        bankDetails: "",
+        createdAt: "",
+    });
     const [transactions, setTransactions] = useState<BuyerTransactionsState[]>([]);
 
+
+    const [balanceRequest, setBalanceRequest] = useState<AddBuyerBalanceState>({
+        amount: 0,
+        id: userId,
+    });
+
     useEffect(() => {
-        BuyerDashboardService.getBuyerWallet(userDetails.id).then((res) => {
-            setBalance(res.data.balance);
+        BuyerDashboardService.getBuyerTransactions(userId).then((res) => {
+            setTransactions(res.data);
         });
 
-        BuyerDashboardService.getBuyerTransactions(userDetails.id).then((res) => {
-            setTransactions(res.data);
+        BuyerDashboardService.getBuyerDetails(userId).then((res) => {
+            setUserDetails(res.data);
         });
     }, []);
 
     const addBalance = () => {
         BuyerDashboardService.addBuyerBalance(balanceRequest).then((res) => {
-            setBalance(res.data.balance);
+            setWallet(res.data);
         });
     }
 
@@ -48,16 +56,17 @@ const BuyerDashboard = () => {
                         <img src="../../avatar.jpg" alt="avatar" className="rounded-[50%] w-full h-full object-cover border-main-300 border-4" />
                     </div>
                     <div className="text-white font-semibold bg-main-400 rounded-md w-full p-2">
-                        <h2 className="my-[2px]">Customer Name: {userDetails.customerName}</h2>
+                        <h2 className="my-[2px]">Customer Name: {userDetails.name}</h2>
                         <h2 className="my-[2px]">Email: {userDetails.email}</h2>
                         <h2 className="my-[2px]">Phone: {userDetails.phone}</h2>
+                        <h2 className="my-[2px]">Bank Details: {userDetails.bankDetails}</h2>
                         <h2 className="my-[2px]">Created: {userDetails.createdAt.substring(0,10)}</h2>
                     </div>
                 </div>
                 <div className="w-[80%] flex flex-col items-start p-4 gap-[30px]">
                     <div className="flex gap-[10px]">
                         <div className="bg-main-500 p-2 rounded-md font-semibold text-white">
-                            <h2>Total Balance: {balance}TL</h2>
+                            <h2>Total Balance: {wallet.balance}TL</h2>
                         </div>
                         <button onClick={addBalance} className="flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
                             <span className="material-icons">add_circle</span>

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, SetStateAction } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import useProductStore from "../../stores/productStore";
 import { PayState } from "./types";
@@ -71,17 +71,16 @@ const Pay = () => {
     }).catch((error) => {
       console.log(error);
     });
-  }
+  };
     
-
   return (
-    <div>
-      <video ref={video} id="video" autoPlay muted></video>
-      <button onClick={openCamera}>Open Camera</button>
-      <button onClick={startImageCapture}>Start</button>
-          <div>
-            <button onClick={doPayment}>Do Payment</button>
-          </div>
+    <div className="py-[50px]">
+      <div className="container mx-auto bg-main-500 rounded-md flex flex-col py-[50px] gap-[10px]">
+        <video ref={video} id="video" autoPlay muted className="mx-auto"></video>
+        <button onClick={openCamera} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Open Camera</button>
+        <button onClick={startImageCapture} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Start</button>
+        <button onClick={doPayment} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Do Payment</button>
+      </div>
     </div>
   );
 };

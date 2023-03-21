@@ -1,9 +1,5 @@
 import http from '../../api';
-import { AddBuyerBalanceState, BuyerTransactionsState, BuyerWalletState } from './types';
-
-const getBuyerWallet = (id: string) => {
-    return http.get<BuyerWalletState>('/customer-wallet/get-balance/' + id );
-}
+import { AddBuyerBalanceState, BuyerDetails, BuyerTransactionsState } from './types';
 
 const addBuyerBalance = (data: AddBuyerBalanceState) => {
     return http.post('/customer-wallet/add-balance', data);
@@ -13,10 +9,14 @@ const getBuyerTransactions = (id: string) => {
     return http.get<BuyerTransactionsState[]>('/customer-transaction/get-transaction/' + id);
 }
 
+const getBuyerDetails = (id: string) => {
+    return http.get<BuyerDetails>('/customer/get-customer/' + id);
+}
+
 const BuyerDashboardService = {
-    getBuyerWallet,
     addBuyerBalance,
-    getBuyerTransactions
+    getBuyerTransactions,
+    getBuyerDetails
 }
 
 export default BuyerDashboardService;

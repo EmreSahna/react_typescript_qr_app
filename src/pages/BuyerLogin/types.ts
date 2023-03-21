@@ -10,3 +10,9 @@ export interface SignInState {
     email: string;
     password: string;
 }
+
+export interface BuyerWalletState {
+    id: string;
+    balance: number;
+    customerId: string;
+}

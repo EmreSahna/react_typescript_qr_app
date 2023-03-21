@@ -8,13 +8,8 @@ const Navbar = () => {
     
     const logout = () => {
         store.setUserDetails({
-            customerName: '',
-            email: '',
+            name: '',
             id: '',
-            password: '',
-            phone: '',
-            bank_details: '',
-            createdAt: ''
         });
         setUserDetails(store.getUserDetails());
     }
@@ -25,13 +20,13 @@ const Navbar = () => {
                 <a href="/" className="flex items-center">
                     <span className="self-center text-[32px] font-semibold whitespace-nowrap text-main-300 font-staatliches">QuickPayr</span>
                 </a>
-                {userDetails.customerName != '' ? (
+                {userDetails.name != '' ? (
                     <div className="flex order-2">
                         <Link to="/buyer/dashboard" className="flex items-center justify-center gap-[6px] text-main-300 border-2 border-main-300 font-medium px-3 py-2 mr-3">
                             <span className="material-icons">
                                 person
                             </span>
-                            <span>{userDetails.customerName}</span>
+                            <span>{userDetails.name}</span>
                         </Link>
                         <button onClick={logout} className="flex items-center justify-center gap-[6px] text-white bg-gradient-to-r from-main-300 to-main-600 shadow-md font-medium px-3 py-2 mr-3">
                             <span className="material-icons">

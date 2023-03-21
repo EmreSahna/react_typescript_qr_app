@@ -1,9 +1,13 @@
 import http from '../../api';
-import { SignInState, SignUpState } from './types';
+import { BuyerWalletState, SignInState, SignUpState } from './types';
 
 const registerBuyer = (data: SignUpState) => {
     return http.post('/customer/create', data);
 };
+
+const getBuyerWallet = (id: string) => {
+    return http.get<BuyerWalletState>('/customer-wallet/get-balance/' + id );
+}
 
 const loginBuyer = (data: SignInState) => {
     return http.post('/customer/login', data);
@@ -11,7 +15,8 @@ const loginBuyer = (data: SignInState) => {
 
 const BuyerService = {
     registerBuyer,
-    loginBuyer
+    loginBuyer,
+    getBuyerWallet
 };
   
 export default BuyerService;
