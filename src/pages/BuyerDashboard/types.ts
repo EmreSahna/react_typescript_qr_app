@@ -13,7 +13,7 @@ export interface BuyerTransactionsState {
 }
 
 export interface BuyerDetails {
-    name: string;
+    customerName: string;
     email: string;
     phone: string;
     bankDetails: string;

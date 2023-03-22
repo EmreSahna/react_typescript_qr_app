@@ -9,7 +9,7 @@ const BuyerDashboard = () => {
     const [wallet, setWallet] = useState(userStore.getUserWallet());
     const [userId, setUserId] = useState(userStore.getUserDetails().id);
     const [userDetails, setUserDetails] = useState<BuyerDetails>({
-        name: "",
+        customerName: "",
         email: "",
         phone: "",
         bankDetails: "",
@@ -35,6 +35,7 @@ const BuyerDashboard = () => {
 
     const addBalance = () => {
         BuyerDashboardService.addBuyerBalance(balanceRequest).then((res) => {
+            userStore.setUserWallet(res.data);
             setWallet(res.data);
         });
     }
@@ -53,10 +54,10 @@ const BuyerDashboard = () => {
                 <div className="flex flex-wrap">
                 <div className="w-[20%] bg-main-500 rounded-md flex justify-center flex-col items-center p-4 gap-[10px]">
                     <div className="w-[250px] h-[250px]">
-                        <img src="../../avatar.jpg" alt="avatar" className="rounded-[50%] w-full h-full object-cover border-main-300 border-4" />
+                        <img src="./../avatar.jpg" alt="avatar" className="rounded-[50%] w-full h-full object-cover border-main-300 border-4" />
                     </div>
                     <div className="text-white font-semibold bg-main-400 rounded-md w-full p-2">
-                        <h2 className="my-[2px]">Customer Name: {userDetails.name}</h2>
+                        <h2 className="my-[2px]">Name: {userDetails.customerName}</h2>
                         <h2 className="my-[2px]">Email: {userDetails.email}</h2>
                         <h2 className="my-[2px]">Phone: {userDetails.phone}</h2>
                         <h2 className="my-[2px]">Bank Details: {userDetails.bankDetails}</h2>

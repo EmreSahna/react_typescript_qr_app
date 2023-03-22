@@ -19,17 +19,16 @@ const BuyerLogin = () => {
                 id: res.data.id,
                 name: res.data.customerName,
             });
-        }).catch((err) => {
-            console.log(err);
-        });
-
-        BuyerService.getBuyerWallet(store.getUserDetails().id).then((res) => {
-            store.setUserWallet({
-                id: res.data.id,
-                balance: res.data.balance,
-                user_id: res.data.customerId,
+            BuyerService.getBuyerWallet(store.getUserDetails().id).then((res) => {
+                store.setUserWallet({
+                    id: res.data.id,
+                    balance: res.data.balance,
+                    user_id: res.data.customerId,
+                });
+                navigator("/");
+            }).catch((err) => {
+                console.log(err);
             });
-            navigator("/");
         }).catch((err) => {
             console.log(err);
         });
