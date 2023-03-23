@@ -21,6 +21,7 @@ const Pay = () => {
     navigator.mediaDevices.getUserMedia({ video: { width:300, height:300 } }).then((stream) => {
       video.current.srcObject = stream;
       setStream(stream);
+      captureImage();
     }).catch((err) => {
       console.log(err);
     });
@@ -57,14 +58,6 @@ const Pay = () => {
     }, 'image/jpeg', 0.7);
   };
 
-  const startImageCapture = () => {
-    if (stream) {
-      captureImage();
-    } else {
-      console.log('Kamera açık değil');
-    }
-  };
-
   const doPayment = () => {
     PaymentService.pay(paymentState).then((response) => {
       console.log(response);
@@ -74,12 +67,17 @@ const Pay = () => {
   };
     
   return (
-    <div className="py-[50px]">
-      <div className="container mx-auto bg-main-500 rounded-md flex flex-col py-[50px] gap-[10px]">
-        <video ref={video} id="video" autoPlay muted className="mx-auto"></video>
-        <button onClick={openCamera} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Open Camera</button>
-        <button onClick={startImageCapture} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Start</button>
-        <button onClick={doPayment} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Do Payment</button>
+    <div className="bg-gradient-to-b from-main-500 to-main-100">
+      <div className="w-full py-40">
+        <div className="mx-auto container">
+          <video ref={video} width={300} height={300} id="video" autoPlay muted className="mx-auto" />
+          <div className="w-fit mx-auto gap-[10px] flex flex-col mt-[20px]">
+            <button onClick={openCamera} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Scan</button>
+            {paymentState.seller_id != '' &&
+              <button onClick={doPayment} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Do Payment</button>
+            }
+          </div>
+        </div>
       </div>
     </div>
   );

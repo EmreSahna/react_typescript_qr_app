@@ -15,7 +15,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="bg-main-500 px-2">
+        <nav className="px-2 bg-transparent fixed w-full z-[999]">
             <div className="container flex flex-wrap items-center justify-between mx-auto">
                 <a href="/" className="flex items-center">
                     <span className="self-center text-[32px] font-semibold whitespace-nowrap text-main-300 font-staatliches">QuickPayr</span>
@@ -55,7 +55,7 @@ const Navbar = () => {
                 </div>)
                 }
                 <div className="items-center justify-end flex w-[70%] order-1" id="navbar-cta">
-                    <ul className="flex p-4 text-[20px] rounded-lg flex-row space-x-8 mt-0 font-semibold font-staatliches text-white">
+                    <ul className="flex p-4 text-[20px] rounded-lg flex-row space-x-8 mt-0 font-staatliches text-white">
                         <li>
                             <Link to="/" className="block py-2 pl-3 pr-4 rounded">Home</Link>
                         </li>

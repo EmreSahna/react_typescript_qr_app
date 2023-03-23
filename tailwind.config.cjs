@@ -6,11 +6,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'hero-back': "url('../home-back.svg')",
+        'phone-back': "url('../bg-phone.svg')",
+      },
       fontFamily: {
         'pacifico': ['"Pacifico"', 'cursive'],
         'staatliches': ['"Staatliches"', 'cursive'],
         'domine': ['"Domine"', 'serif'],
         'open-sans': ['"Open Sans"', 'sans-serif'],
+        'quicksand': ['"Quicksand"', 'sans-serif'],
+        'roboto': ['"Roboto"', 'sans-serif'],
       },
       colors: {
         'main-100': '#242582',
@@ -19,6 +25,7 @@ module.exports = {
         'main-400': '#99738E',
         'main-500': '#2F2FA2',
         'main-600': '#fa6748',
+        'main-700': '#001220'
       }
     },
   },
