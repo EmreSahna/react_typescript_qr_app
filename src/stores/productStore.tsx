@@ -8,6 +8,7 @@ export interface IProductDetails {
     id: string;
     name: string;
     price: number;
+    quantity: number;
 }
 
 export interface IProductStore {
