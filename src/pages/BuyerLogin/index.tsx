@@ -18,6 +18,7 @@ const BuyerLogin = () => {
             store.setUserDetails({
                 id: res.data.id,
                 name: res.data.customerName,
+                userType: "buyer",
             });
             BuyerService.getBuyerWallet(store.getUserDetails().id).then((res) => {
                 store.setUserWallet({

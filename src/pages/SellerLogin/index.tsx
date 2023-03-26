@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SignInState, SignUpState } from "./types";
 import { useForm } from "react-hook-form";
 import SellerService from "./service";
+import useUserStore from "../../stores/userStore";
 
 const SellerLogin = () => {
+
+    const navigator = useNavigate();
+    const store = useUserStore((state) => state);
     const { register: signinregister, handleSubmit: handleSignIn } = useForm<SignInState>();
     const { register: signupregister, handleSubmit: handleSignUp } = useForm<SignUpState>();
     const [formType, setFormType] = useState("signin");
 
     const signin = (data: SignInState) => {
-        SellerService.loginBuyer(data).then((res) => {
-            console.log(res);
+        SellerService.loginSeller(data).then((res) => {
+            store.setUserDetails({
+                id: res.data.id,
+                name: res.data.sellerName,
+                userType: "seller",
+            });
+
+            navigator("/");
         }).catch((err) => {
             console.log(err);
         })
-    }
+    }  
 
     const signup = (data: SignUpState) => {
-        SellerService.registerBuyer(data).then((res) => {
+        SellerService.registerSeller(data).then((res) => {
             console.log(res);
         }).catch((err) => {
             console.log(err);

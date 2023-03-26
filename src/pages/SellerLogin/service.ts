@@ -1,17 +1,22 @@
 import http from '../../api';
-import { SignInState, SignUpState } from './types';
+import { SellerWalletState, SignInState, SignUpState } from './types';
 
-const registerBuyer = (data: SignUpState) => {
+const registerSeller = (data: SignUpState) => {
     return http.post('/seller/create', data);
 };
 
-const loginBuyer = (data: SignInState) => {
+const getSellerWallet = (id: string) => {
+    return http.get<SellerWalletState>('/customer-wallet/get-balance/' + id );
+}
+
+const loginSeller = (data: SignInState) => {
     return http.post('/seller/login', data);
 };
 
 const SellerService = {
-    registerBuyer,
-    loginBuyer
+    registerSeller,
+    loginSeller,
+    getSellerWallet
 };
   
 export default SellerService;

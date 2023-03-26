@@ -10,6 +10,7 @@ const Navbar = () => {
         store.setUserDetails({
             name: '',
             id: '',
+            userType: ''
         });
         setUserDetails(store.getUserDetails());
     }
@@ -22,12 +23,21 @@ const Navbar = () => {
                 </a>
                 {userDetails.name != '' ? (
                     <div className="flex order-2">
-                        <Link to="/buyer/dashboard" className="flex items-center justify-center gap-[6px] text-main-300 border-2 border-main-300 font-medium px-3 py-2 mr-3">
-                            <span className="material-icons">
-                                person
-                            </span>
-                            <span>{userDetails.name}</span>
-                        </Link>
+                        {userDetails.userType === "seller" ? (
+                            <Link to="/seller/dashboard" className="flex items-center justify-center gap-[6px] text-main-300 border-2 border-main-300 font-medium px-3 py-2 mr-3">
+                                <span className="material-icons">
+                                    person
+                                    </span>
+                                    <span>{userDetails.name}</span>
+                            </Link>
+                        ) : (
+                            <Link to="/buyer/dashboard" className="flex items-center justify-center gap-[6px] text-main-300 border-2 border-main-300 font-medium px-3 py-2 mr-3">
+                                <span className="material-icons">
+                                    person
+                                </span>
+                                <span>{userDetails.name}</span>
+                            </Link>
+                        )}
                         <button onClick={logout} className="flex items-center justify-center gap-[6px] text-white bg-gradient-to-r from-main-300 to-main-600 shadow-md font-medium px-3 py-2 mr-3">
                             <span className="material-icons">
                                 logout
@@ -52,8 +62,8 @@ const Navbar = () => {
                             Seller
                         </span>
                     </Link>
-                </div>)
-                }
+                </div>
+                )}
                 <div className="items-center justify-end flex w-[70%] order-1" id="navbar-cta">
                     <ul className="flex p-4 text-[20px] rounded-lg flex-row space-x-8 mt-0 font-staatliches text-white">
                         <li>

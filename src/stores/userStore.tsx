@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export interface IUserDetails {
     id: string;
     name: string;
+    userType: string;
 }
 
 export interface IUserWallet {
@@ -23,7 +24,8 @@ export interface IUserStore {
 const useUserStore = create<IUserStore>((set,get): IUserStore => ({
     userDetails: {
         id: '',
-        name: ''
+        name: '',
+        userType: ''
     },
     setUserDetails: (userDetails: IUserDetails) => {
         set((state) => ({

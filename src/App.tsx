@@ -7,6 +7,7 @@ import Market from './pages/Market';
 import Pay from './pages/Pay';
 import SellerLogin from './pages/SellerLogin';
 import Home from './pages/Home';
+import SellerDashboard from './pages/SellerDashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/buyer/login" element={<BuyerLogin />} />
       <Route element={<Layout/>} >
           <Route path="buyer/dashboard" element={<BuyerDashboard />} />
+          <Route path="seller/dashboard" element={<SellerDashboard />} />
           <Route path="" element={<Home />} />
           <Route path="about" element={<h1>About</h1>} />
           <Route path="market" element={<Market />} />
