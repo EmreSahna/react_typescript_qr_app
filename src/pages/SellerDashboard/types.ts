@@ -11,7 +11,7 @@ export interface SellerDetails {
 export interface SellerTransactions {
     id: string;
     buyerId: string;
-    purchasedItemId: string;
+    purchaseItemId: string;
     amount: number;
     createdAt: string;
 }

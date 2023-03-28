@@ -84,7 +84,7 @@ const SellerDashboard = () => {
                                             <td className="bg-main-400 border-2 border-main-500">{transaction.amount}</td>
                                             <td className="bg-main-400 border-2 border-main-500">{transaction.buyerId}</td>
                                             <td className="bg-main-400 border-2 border-main-500">{transaction.createdAt}</td>
-                                            <td className="bg-main-400 border-2 border-main-500">{transaction.purchasedItemId}</td>
+                                            <td className="bg-main-400 border-2 border-main-500">{transaction.purchaseItemId}</td>
                                         </tr>
                                     ))}
                                 </table>

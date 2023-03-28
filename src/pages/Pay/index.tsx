@@ -28,14 +28,12 @@ const Pay = () => {
   };
 
   const closeCamera = () => {
-    if (stream) {
-      const tracks = stream.getTracks();
-      tracks.forEach((track) => {
-        track.stop();
-      });
+    navigator.mediaDevices.getUserMedia({ video: { width:300, height:300 } }).then((stream) => {
       setStream(null);
       video.current.srcObject = null;
-    }
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   const captureImage = () => {
