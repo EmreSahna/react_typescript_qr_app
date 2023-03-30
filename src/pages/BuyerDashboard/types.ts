@@ -19,3 +19,8 @@ export interface BuyerDetails {
     bankDetails: string;
     createdAt: string;
 }
+
+export interface BuyerWallet {
+    customer_id: string;
+    balance: number;
+}

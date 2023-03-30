@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import useUserStore from "../../stores/userStore";
 import BuyerDashboardService from "./service";
-import { AddBuyerBalanceState, BuyerDetails, BuyerTransactionsState } from "./types";
+import { AddBuyerBalanceState, BuyerDetails, BuyerTransactionsState, BuyerWallet } from "./types";
 
 const BuyerDashboard = () => {
     const userStore = useUserStore((state) => state);
 
-    const [wallet, setWallet] = useState(userStore.getUserWallet());
+    const [wallet, setWallet] = useState<BuyerWallet>();
     const [userId, setUserId] = useState(userStore.getUserDetails().id);
     const [userDetails, setUserDetails] = useState<BuyerDetails>({
         customerName: "",
@@ -16,8 +16,6 @@ const BuyerDashboard = () => {
         createdAt: "",
     });
     const [transactions, setTransactions] = useState<BuyerTransactionsState[]>([]);
-
-
     const [balanceRequest, setBalanceRequest] = useState<AddBuyerBalanceState>({
         amount: 0,
         id: userId,
@@ -26,16 +24,31 @@ const BuyerDashboard = () => {
     useEffect(() => {
         BuyerDashboardService.getBuyerTransactions(userId).then((res) => {
             setTransactions(res.data);
+        }).catch((err) => {
+            console.log(err);
         });
 
         BuyerDashboardService.getBuyerDetails(userId).then((res) => {
             setUserDetails(res.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        BuyerDashboardService.getBuyerWalletBalance(userId).then((res) => {
+            setWallet(res.data);
+        }).catch((err) => {
+            console.log(err);
         });
     }, []);
 
     const addBalance = () => {
         BuyerDashboardService.addBuyerBalance(balanceRequest).then((res) => {
-            userStore.setUserWallet(res.data);
+            setWallet(res.data);
+        });
+    }
+
+    const createWallet = () => {
+        BuyerDashboardService.createBuyerWallet(userId).then((res) => {
             setWallet(res.data);
         });
     }
@@ -67,17 +80,26 @@ const BuyerDashboard = () => {
                     </div>
                     <div className="w-[80%] flex flex-col items-start p-4 gap-[30px]">
                         <div className="flex gap-[10px]">
-                            <div className="bg-main-400 p-2 rounded-md font-semibold text-white">
-                                <h2>Total Balance: {wallet.balance}TL</h2>
-                            </div>
-                            <button onClick={addBalance} className="flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
-                                <span className="material-icons">add_circle</span>
-                                <span>Add Balance</span>
-                            </button>
-                            <div className="flex items-center gap-[5px]">
-                                <label className="text-white">Amount:</label>
-                                <input type="number" onChange={handleInputChange} className="border-2 border-main-300 w-[20%] outline-none text-[20px]" />
-                            </div>
+                            {wallet ? (
+                                <>
+                                    <div className="bg-main-400 p-2 rounded-md font-semibold text-white">
+                                        <h2>Total Balance: {wallet.balance}TL</h2>
+                                    </div>
+                                    <button onClick={addBalance} className="flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
+                                        <span className="material-icons">add_circle</span>
+                                        <span>Add Balance</span>
+                                    </button>
+                                    <div className="flex items-center gap-[5px]">
+                                        <label className="text-white">Amount:</label>
+                                        <input type="number" onChange={handleInputChange} className="border-2 border-main-300 w-[20%] outline-none text-[20px]" />
+                                    </div>
+                                </>
+                            ):(
+                                <button onClick={createWallet} className="flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
+                                    <span className="material-icons">add_circle</span>
+                                    <span>Create Wallet</span>
+                                </button>
+                            )}
                         </div>
                         <div className="bg-main-400 p-2 w-full rounded-md">
                             <h2 className="text-white font-semibold text-[22px]">Recent Transactions</h2>

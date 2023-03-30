@@ -2,13 +2,24 @@ import { useEffect, useState } from "react";
 import useProductStore from "../../stores/productStore";
 import useUserStore from "../../stores/userStore";
 import { Link } from "react-router-dom";
+import CheckoutService from "./service";
+import { BuyerWallet } from "./types";
 
 const Checkout = () => {
     const userStore = useUserStore((state) => state);
     const productStore = useProductStore((state) => state); 
     const [totalPrice, setTotalPrice] = useState<number>(productStore.getTotalPrice());
     const [userDetails, setUserDetails] = useState(userStore.getUserDetails());
-    const [userWallet, setUserWallet] = useState(userStore.getUserWallet());
+    const [userWallet, setUserWallet] = useState<BuyerWallet>({
+        balance: 0,
+        customer_id: "",
+    });
+
+    useEffect(() => {
+        CheckoutService.getBuyerWalletBalance(userDetails.id).then((response) => {
+            setUserWallet(response.data);
+        }); 
+    }, []);
     
     const removeItem = (id: string) => {
         const newProductDetails = productStore.getProductDetails().filter((product) => product.id !== id);

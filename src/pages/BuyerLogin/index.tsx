@@ -20,16 +20,7 @@ const BuyerLogin = () => {
                 name: res.data.customerName,
                 userType: "buyer",
             });
-            BuyerService.getBuyerWallet(store.getUserDetails().id).then((res) => {
-                store.setUserWallet({
-                    id: res.data.id,
-                    balance: res.data.balance,
-                    user_id: res.data.customerId,
-                });
-                navigator("/");
-            }).catch((err) => {
-                console.log(err);
-            });
+            navigator("/");
         }).catch((err) => {
             console.log(err);
         });
