@@ -16,6 +16,7 @@ const Pay = () => {
     purchased_item_id: productStore.getProductDetails()[0].id,
   });
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState<boolean>(false);
 
   const openCamera = () => {   
     navigator.mediaDevices.getUserMedia({ video: { width:300, height:300 } }).then((stream) => {
@@ -59,6 +60,7 @@ const Pay = () => {
   const doPayment = () => {
     PaymentService.pay(paymentState).then((response) => {
       console.log(response);
+      setIsPaymentSuccess(true);
     }).catch((error) => {
       console.log(error);
     });
@@ -68,13 +70,23 @@ const Pay = () => {
     <div className="bg-gradient-to-b from-main-500 to-main-100">
       <div className="w-full py-40">
         <div className="mx-auto container">
-          <video ref={video} width={300} height={300} id="video" autoPlay muted className="mx-auto" />
-          <div className="w-fit mx-auto gap-[10px] flex flex-col mt-[20px]">
-            <button onClick={openCamera} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Scan</button>
-            {paymentState.seller_id != '' &&
-              <button onClick={doPayment} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Do Payment</button>
-            }
-          </div>
+          { isPaymentSuccess ? (
+            <div className="bg-green-500 text-white font-domine text-[20px] font-semibold w-fit mx-auto p-2 rounded-md">
+              Payment Success
+            </div>
+          ) : (
+            <>
+              <video ref={video} width={300} height={300} id="video" autoPlay muted className="mx-auto" />
+              <div className="w-fit mx-auto gap-[10px] flex flex-col mt-[20px]">
+                <button onClick={openCamera} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">
+                  Scan
+                </button>
+                {paymentState.seller_id != '' &&
+                  <button onClick={doPayment} className="text-white font-domine text-[20px] font-semibold bg-main-300 w-fit mx-auto p-2 rounded-md">Do Payment</button>
+                }
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

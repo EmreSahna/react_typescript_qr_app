@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import useUserStore from "../../stores/userStore";
 import SellerDashboardService from "./services";
-import { SellerDetails, SellerTransactions } from "./types";
+import { WithdrawSellerBalanceState, SellerDetails, SellerTransactions, SellerWallet } from "./types";
 
 const SellerDashboard = () => {
     const userStore = useUserStore((state) => state);
+    const [wallet, setWallet] = useState<SellerWallet>();
     const [userId, setUserId] = useState(userStore.getUserDetails().id);
     const [userDetails, setUserDetails] = useState<SellerDetails>({
         sellerName: "",
@@ -17,14 +18,28 @@ const SellerDashboard = () => {
     });
     const [transactions, setTransactions] = useState<SellerTransactions[]>([]);
     const [qrCode, setQrCode] = useState("");
+    const [balanceRequest, setBalanceRequest] = useState<WithdrawSellerBalanceState>({
+        amount: 0,
+        id: userId,
+    });
 
     useEffect(() => {
         SellerDashboardService.getSellerTransactions(userId).then((res) => {
             setTransactions(res.data);
+        }).catch((err) => {
+            console.log(err);
         });
 
         SellerDashboardService.getSellerDetails(userId).then((res) => {
             setUserDetails(res.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        SellerDashboardService.getSellerWalletBalance(userId).then((res) => {
+            setWallet(res.data);
+        }).catch((err) => {
+            console.log(err);
         });
     }, []);
 
@@ -38,6 +53,25 @@ const SellerDashboard = () => {
             setQrCode(url);
         });
     };
+
+    const withdrawBalance = () => {
+        SellerDashboardService.withdrawSellerBalance(balanceRequest).then((res) => {
+            setWallet(res.data);
+        });
+    }
+
+    const createWallet = () => {
+        SellerDashboardService.createSellerWallet(userId).then((res) => {
+            setWallet(res.data);
+        });
+    }
+
+    const handleInputChange = (e: any) => {
+        setBalanceRequest({
+            ...balanceRequest,
+            amount: parseInt(e.target.value)
+        });
+    }
 
     return (
         <div className="bg-gradient-to-b from-main-500 to-main-100">
@@ -61,11 +95,31 @@ const SellerDashboard = () => {
                     </div>
                     <div className="w-[80%] flex flex-col items-start p-4 gap-[30px]">
                         <div className="flex gap-[10px]">
-                            <button onClick={generateQrCodeAndShow} className="h-fit flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
-                                <span className="material-icons">qr_code_2</span>
-                                <span>Generate QR Code</span>
-                            </button>
-                            {qrCode && <img src={qrCode} alt="qr code" className="w-[250px] h-[250px]" />}
+                            {wallet ? (
+                                <>
+                                    <div className="h-fit bg-main-400 p-2 rounded-md font-semibold text-white">
+                                        <h2>Total Balance: {wallet.balance}TL</h2>
+                                    </div>
+                                    <button onClick={withdrawBalance} className="h-fit flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
+                                        <span className="material-icons">payments</span>
+                                        <span>Withdraw</span>
+                                    </button>
+                                    <div className="flex items-center gap-[5px] h-fit">
+                                        <label className="text-white">Amount:</label>
+                                        <input type="number" onChange={handleInputChange} className="border-2 border-main-300 w-[20%] outline-none text-[20px]" />
+                                    </div>
+                                    <button onClick={generateQrCodeAndShow} className="h-fit flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
+                                        <span className="material-icons">qr_code_2</span>
+                                        <span>Generate QR Code</span>
+                                    </button>
+                                    {qrCode && <img src={qrCode} alt="qr code" className="w-[250px] h-[250px]" />}
+                                </>
+                            ):(
+                                <button onClick={createWallet} className="flex items-center gap-[3px] bg-main-300 text-white p-2 font-semibold rounded-md font-domine">
+                                    <span className="material-icons">add_circle</span>
+                                    <span>Create Wallet</span>
+                                </button>
+                            )}
                         </div>
                         <div className="bg-main-400 p-2 w-full rounded-md">
                             <h2 className="text-white font-semibold text-[22px]">Recent Transactions</h2>

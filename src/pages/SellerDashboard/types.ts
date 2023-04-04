@@ -15,3 +15,13 @@ export interface SellerTransactions {
     amount: number;
     createdAt: string;
 }
+
+export interface SellerWallet {
+    seller_id: string;
+    balance: number;
+}
+
+export interface WithdrawSellerBalanceState {
+    id: string;
+    amount: number;
+}
