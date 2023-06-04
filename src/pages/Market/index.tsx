@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import useProductStore, { IProductDetails } from "../../stores/productStore";
 import { Link } from "react-router-dom";
+import useUserStore from "../../stores/userStore";
 
 const Market = () => {
+    const userStore = useUserStore((state) => state);
     const store = useProductStore((state) => state);
     const [products, setProducts] = useState(store.getProductDetails());
     const [totalPrice, setTotalPrice] = useState<number>(store.getTotalPrice());
+    const [userDetails, setUserDetails] = useState(userStore.getUserDetails());
 
     useEffect(() => {
         setProducts(store.getProductDetails());
@@ -78,51 +81,58 @@ const Market = () => {
                         <div className="grid grid-cols-3">
                             <div className="p-4">
                                 <div className="bg-main-400 p-2 rounded-md">
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Product 1</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Tomato</h1>
+                                    <div className="h-full overflow-hidden ">
+                                        <img src="products/tomato.jpg" className="object-cover w-full h-full" />
+                                    </div>
                                     <hr />
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 100</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 2$</h1>
                                     <div className="flex justify-center">
-                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("1", "Product 1", 100)}>Add to cart</button>
+                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("1", "Tomato", 2)}>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
                             <div className="p-4">
                                 <div className="bg-main-400 p-2 rounded-md">
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Product 2</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Cucumber</h1>
+                                    <img src="products/cucumber.jpg" alt="" />
                                     <hr />
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 50</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 1$</h1>
                                     <div className="flex justify-center">
-                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("2", "Product 2", 50)}>Add to cart</button>
+                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("2", "Cucumber", 1)}>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
                             <div className="p-4">
                                 <div className="bg-main-400 p-2 rounded-md">
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Product 3</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Milk</h1>
+                                    <img src="products/milk.jpg" alt="" />
                                     <hr />
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 75</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 3$</h1>
                                     <div className="flex justify-center">
-                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("3", "Product 3", 75)}>Add to cart</button>
+                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("3", "Milk", 3)}>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
                             <div className="p-4">
                                 <div className="bg-main-400 p-2 rounded-md">
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Product 4</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Potato</h1>
+                                    <img src="products/potato.jpg" alt="" />
                                     <hr />
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 15</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 1$</h1>
                                     <div className="flex justify-center">
-                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("4", "Product 4", 15)}>Add to cart</button>
+                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("4", "Potato", 1)}>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
                             <div className="p-4">
                                 <div className="bg-main-400 p-2 rounded-md">
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Product 5</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Cheese</h1>
+                                    <img src="products/cheese.jpg" alt="" />
                                     <hr />
-                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 45</h1>
+                                    <h1 className="text-white font-semibold font-domine text-[22px] text-center">Price: 3$</h1>
                                     <div className="flex justify-center">
-                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("5", "Product 5", 45)}>Add to cart</button>
+                                        <button className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2" onClick={() => addToCard("5", "Cheese", 3)}>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +152,7 @@ const Market = () => {
                                         <div className="flex w-full bg-main-400 rounded-md text-left p-1 text-white font-semibold font-domine">
                                             <div className="w-[80%]">
                                                 <h1 className="text-[20px]">Name: {product.name}</h1>
-                                                <h1 className="text-[18px]">Price: {product.price}TL</h1>
+                                                <h1 className="text-[18px]">Price: {product.price}$</h1>
                                                 <h1 className="text-[16px] flex items-center">Quantity: {product.quantity}</h1>
                                             </div>
                                             <div className="w-[20%] font-sans flex flex-col items-center justify-between">
@@ -159,10 +169,14 @@ const Market = () => {
                                             </div>
                                         </div>
                                     ))}
-                                    <h3 className="flex justify-center font-domine text-white w-full">Total Price: {totalPrice}</h3>
-                                    <Link to={'/checkout'} className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2">
-                                        Checkout
-                                    </Link>
+                                    <h3 className="flex justify-center font-domine text-white w-full">Total Price: {totalPrice}$</h3>
+                                    {userDetails.name == '' ? (
+                                        <h1 className="text-white font-semibold font-domine text-[22px] text-center">Please login to checkout</h1>
+                                    ) : (
+                                        <Link to={'/checkout'} className="bg-main-300 text-white font-semibold font-domine text-[22px] rounded-md p-2 m-2">
+                                            Checkout
+                                        </Link>
+                                    )}
                                 </div>  
                                 )
                             }

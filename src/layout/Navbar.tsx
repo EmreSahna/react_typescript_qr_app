@@ -72,12 +72,6 @@ const Navbar = () => {
                         <li>
                             <Link to="/market" className="block py-2 pl-3 pr-4 rounded">Market</Link>
                         </li>
-                        <li>
-                            <Link to="/about" className="block py-2 pl-3 pr-4 rounded">About Us</Link>
-                        </li>
-                        <li>
-                            <Link to="/faq" className="block py-2 pl-3 pr-4 rounded">F.A.Q</Link>
-                        </li>
                     </ul>
                 </div>
             </div>

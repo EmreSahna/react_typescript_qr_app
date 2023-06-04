@@ -2,7 +2,7 @@ import http from '../../api';
 import { SellerWalletState, SignInState, SignUpState } from './types';
 
 const registerSeller = (data: SignUpState) => {
-    return http.post('/seller/create', data);
+    return http.post('/seller/register', data);
 };
 
 const getSellerWallet = (id: string) => {

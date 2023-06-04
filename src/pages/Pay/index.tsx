@@ -30,8 +30,12 @@ const Pay = () => {
 
   const closeCamera = () => {
     navigator.mediaDevices.getUserMedia({ video: { width:300, height:300 } }).then((stream) => {
-      setStream(null);
       video.current.srcObject = null;
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+      setStream(null);
     }).catch((err) => {
       console.log(err);
     });

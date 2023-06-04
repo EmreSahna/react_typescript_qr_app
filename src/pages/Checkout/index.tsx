@@ -50,7 +50,7 @@ const Checkout = () => {
                                         <h1 className="font-domine text-[22px] text-white font-semibold text-left">Product Details</h1>
                                         <div className="flex flex-col justify-center items-start">
                                             <h1 className="font-domine text-[22px] text-white font-semibold text-center">Name: {product.name}</h1>
-                                            <h1 className="font-domine text-[22px] text-white font-semibold text-center">Price: {product.price}</h1>
+                                            <h1 className="font-domine text-[22px] text-white font-semibold text-center">Price: {product.price}$</h1>
                                             <h1 className="font-domine text-[22px] text-white font-semibold text-center">Quantity: {product.quantity}</h1>
                                         </div>
                                         <button onClick={() => removeItem(product.id)} className="bg-main-300 p-2 mx-auto rounded-md w-full text-center font-domine font-semibold">Remove</button>
@@ -58,7 +58,7 @@ const Checkout = () => {
                                 </div>
                             ))}
                         </div>
-                        <h2 className="w-full text-[18px] font-domine text-center my-[10px] text-white">Total Price: {totalPrice}</h2>
+                        <h2 className="w-full text-[18px] font-domine text-center my-[10px] text-white">Total Price: {totalPrice}$</h2>
                         {userWallet.balance < totalPrice ? (
                             <h1 className="font-domine text-[22px] text-white font-semibold text-center my-[10px] w-full">Insufficient Balance</h1>
                         ) : (
